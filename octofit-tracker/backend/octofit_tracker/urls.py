@@ -22,10 +22,11 @@ import os
 
 def api_root(request):
     codespace_name = os.environ.get('CODESPACE_NAME', 'localhost')
-    if codespace_name != 'localhost':
-        api_url = f"https://{codespace_name}-8000.app.github.dev/api/"
+    if codespace_name and codespace_name != 'localhost':
+        base_url = f"https://{codespace_name}-8000.app.github.dev"
     else:
-        api_url = "http://localhost:8000/api/"
+        base_url = "http://localhost:8000"
+    api_url = f"{base_url}/api/"
     return JsonResponse({
         "api_root": api_url,
         "users": f"{api_url}users/",
